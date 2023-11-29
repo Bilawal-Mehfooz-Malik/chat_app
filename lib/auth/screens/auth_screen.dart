@@ -12,12 +12,23 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   var _isLogin = true;
+  final _formKey = GlobalKey<FormState>();
 
   //switch to signUp and LogIn
-  void switchState() {
+  void _switchState() {
     setState(() {
       _isLogin = !_isLogin;
     });
+  }
+
+  // Login method
+  void _logInMethod() {
+    _formKey.currentState!.validate();
+  }
+
+  // Signup method
+  void _signUpMethod() {
+    _formKey.currentState!.validate();
   }
 
   @override
@@ -46,26 +57,29 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        _isLogin ? const LogIn() : const SignUp(),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          _isLogin ? const LogIn() : const SignUp(),
 
-                        // sign up button
-                        CustomButton(
-                          onPressed: () {},
-                          text: _isLogin ? 'Log in' : 'Sign up',
-                        ),
-
-                        // transition button
-                        TextButton(
-                          onPressed: switchState,
-                          child: Text(
-                            _isLogin
-                                ? 'Create an account'
-                                : 'Already have an account',
+                          // sign up button
+                          CustomButton(
+                            onPressed: _isLogin ? _logInMethod : _signUpMethod,
+                            text: _isLogin ? 'Log in' : 'Sign up',
                           ),
-                        )
-                      ],
+
+                          // transition button
+                          TextButton(
+                            onPressed: _switchState,
+                            child: Text(
+                              _isLogin
+                                  ? 'Create an account'
+                                  : 'Already have an account',
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
