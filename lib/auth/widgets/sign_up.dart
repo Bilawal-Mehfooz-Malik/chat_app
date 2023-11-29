@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chat_app/widgets/image_picker.dart';
 import 'package:chat_app/auth/widgets/custom_text_field.dart';
 
 class SignUp extends StatefulWidget {
@@ -43,6 +44,7 @@ class _SignUpState extends State<SignUp> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        const UserImagePicker(),
         // Full Username text form field
         CustomTextField(
           text: 'Username',
