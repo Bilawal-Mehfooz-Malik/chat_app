@@ -2,29 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:chat_app/auth/widgets/custom_text_field.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+  const SignUp({
+    super.key,
+    required this.emailController,
+    required this.passwordController,
+    required this.usernameController,
+    required this.confirmPasswordController,
+  });
+  final TextEditingController usernameController;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController;
 
   @override
   State<SignUp> createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
-  final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  bool _obscureText = true;
 
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _usernameController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
+  void passwordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  void clearController() {
+    widget.emailController.clear();
+  }
+
+  void clearNameController() {
+    widget.usernameController.clear();
   }
 
   // password getter for confirm password
-  String get password => _passwordController.text;
+  String get password => widget.passwordController.text;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +46,9 @@ class _SignUpState extends State<SignUp> {
         // Full Username text form field
         CustomTextField(
           text: 'Username',
-          controller: _usernameController,
+          icon: Icons.clear,
+          onPressed: clearNameController,
+          controller: widget.usernameController,
           validator: (value) {
             if (value == null || value.trim().length < 4) {
               return 'Username must be at least 4 characters long.';
@@ -47,7 +61,9 @@ class _SignUpState extends State<SignUp> {
         // Email text form field
         CustomTextField(
           text: 'Email Address',
-          controller: _emailController,
+          icon: Icons.clear,
+          onPressed: clearController,
+          controller: widget.emailController,
           validator: (value) {
             if (value == null || value.trim().isEmpty || !value.contains('@')) {
               return 'Please enter a valid email address';
@@ -60,8 +76,10 @@ class _SignUpState extends State<SignUp> {
         // Password text form field
         CustomTextField(
           text: 'Password',
-          obscureText: true,
-          controller: _passwordController,
+          obscureText: _obscureText,
+          onPressed: passwordVisibility,
+          controller: widget.passwordController,
+          icon: _obscureText ? Icons.visibility_off : Icons.visibility,
           validator: (value) {
             if (value == null || value.trim().length < 6) {
               return 'Password must be at least 6 characters long.';
@@ -74,8 +92,10 @@ class _SignUpState extends State<SignUp> {
         // Confirm password text form field
         CustomTextField(
           text: 'Confirm Password',
-          obscureText: true,
-          controller: _confirmPasswordController,
+          obscureText: _obscureText,
+          onPressed: passwordVisibility,
+          controller: widget.confirmPasswordController,
+          icon: _obscureText ? Icons.visibility_off : Icons.visibility,
           validator: (value) {
             if (value == null || value.trim().length < 6) {
               return 'Password must be at least 6 characters long.';
