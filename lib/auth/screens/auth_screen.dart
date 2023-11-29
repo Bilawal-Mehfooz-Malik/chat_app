@@ -1,7 +1,7 @@
-import 'package:chat_app/auth/widgets/custom_button.dart';
-import 'package:chat_app/auth/widgets/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/auth/widgets/log_in.dart';
+import 'package:chat_app/auth/widgets/sign_up.dart';
+import 'package:chat_app/auth/widgets/custom_button.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});

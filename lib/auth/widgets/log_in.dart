@@ -1,5 +1,5 @@
-import 'package:chat_app/auth/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:chat_app/auth/widgets/custom_text_field.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
