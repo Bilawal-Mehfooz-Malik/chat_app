@@ -17,10 +17,10 @@ class CustomTextField extends StatefulWidget {
   final IconData icon;
   final bool autoCorrect;
   final bool obscureText;
-  final TextInputType inputType;
-  final FormFieldValidator<String>? validator;
   final VoidCallback onPressed;
+  final TextInputType inputType;
   final TextEditingController controller;
+  final FormFieldValidator<String>? validator;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -53,6 +53,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       focusNode: _focusNode,
+      enableSuggestions: false,
       validator: widget.validator,
       controller: widget.controller,
       keyboardType: widget.inputType,

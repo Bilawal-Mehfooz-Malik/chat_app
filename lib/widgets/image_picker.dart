@@ -1,21 +1,22 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:chat_app/providers/image_picker_provider.dart';
 
-class UserImagePicker extends StatefulWidget {
+class UserImagePicker extends ConsumerStatefulWidget {
   const UserImagePicker({super.key});
 
   @override
-  State<UserImagePicker> createState() => _ImagePickerState();
+  ConsumerState<UserImagePicker> createState() => _ImagePickerState();
 }
 
-class _ImagePickerState extends State<UserImagePicker> {
+class _ImagePickerState extends ConsumerState<UserImagePicker> {
   File? _pickedImageFile;
 
   void _pickImage() async {
     final pickedImage = await ImagePicker().pickImage(
       maxWidth: 150,
-      imageQuality: 80,
       source: ImageSource.camera,
     );
 
@@ -24,6 +25,8 @@ class _ImagePickerState extends State<UserImagePicker> {
     setState(() {
       _pickedImageFile = File(pickedImage.path);
     });
+
+    ref.read(imageProvider).pickImage(_pickedImageFile!);
   }
 
   void _pickGalleryImage() async {
@@ -37,6 +40,8 @@ class _ImagePickerState extends State<UserImagePicker> {
     setState(() {
       _pickedImageFile = File(pickedImage.path);
     });
+
+    ref.read(imageProvider).pickImage(_pickedImageFile!);
   }
 
   @override

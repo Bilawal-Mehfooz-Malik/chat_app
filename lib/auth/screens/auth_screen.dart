@@ -3,18 +3,22 @@ import 'package:chat_app/widgets/messages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chat_app/auth/widgets/log_in.dart';
 import 'package:chat_app/auth/widgets/sign_up.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:chat_app/auth/widgets/custom_button.dart';
+import 'package:chat_app/providers/image_picker_provider.dart';
 
 final _auth = FirebaseAuth.instance;
 
-class AuthScreen extends StatefulWidget {
+class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  ConsumerState<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends ConsumerState<AuthScreen> {
   var _isLogin = true;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
@@ -69,10 +73,15 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
-  // Signup method
+// Sign up method
   void _signUpMethod() async {
     final isValid = _formKey.currentState!.validate();
+    final image = ref.read(imageProvider).pickedImage;
     if (!isValid) return;
+    if (image == null) {
+      showSnack(context: context, content: 'Please pick a profile photo.');
+      return;
+    }
 
     showCircularDialog(context: context, text: 'Connecting...');
 
@@ -81,13 +90,35 @@ class _AuthScreenState extends State<AuthScreen> {
     }
 
     try {
-      await _auth.createUserWithEmailAndPassword(
+      final userCredentials = await _auth.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
+
       if (context.mounted) {
         Navigator.of(context).pop();
       }
+
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('user_images')
+          .child('${userCredentials.user!.uid}.jpg');
+
+      // Upload the image
+      await storageRef.putFile(image);
+
+      // Get the download URL
+      final imageUrl = await storageRef.getDownloadURL();
+
+      // Save user data to Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredentials.user!.uid)
+          .set({
+        'image_url': imageUrl,
+        'email': _emailController.text,
+        'username': _usernameController.text,
+      });
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
         Navigator.of(context).pop();

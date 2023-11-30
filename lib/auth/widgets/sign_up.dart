@@ -44,7 +44,9 @@ class _SignUpState extends State<SignUp> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // Image picker
         const UserImagePicker(),
+
         // Full Username text form field
         CustomTextField(
           text: 'Username',
@@ -52,7 +54,7 @@ class _SignUpState extends State<SignUp> {
           onPressed: clearNameController,
           controller: widget.usernameController,
           validator: (value) {
-            if (value == null || value.trim().length < 4) {
+            if (value == null || value.isEmpty || value.trim().length < 4) {
               return 'Username must be at least 4 characters long.';
             }
             return null;
