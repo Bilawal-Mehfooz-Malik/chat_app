@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chat_app/widgets/message_bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class ChatMessages extends StatelessWidget {
   const ChatMessages({super.key});
@@ -31,12 +31,8 @@ class ChatMessages extends StatelessWidget {
         final loadedMessages = chatSnapShots.data!.docs;
         return ListView.builder(
             reverse: true,
-            padding: const EdgeInsets.only(
-              bottom: 40,
-              left: 13,
-              right: 13,
-            ),
             itemCount: loadedMessages.length,
+            padding: const EdgeInsets.only(left: 13, right: 13, bottom: 40),
             itemBuilder: (ctx, index) {
               final chatMessage = loadedMessages[index].data();
               final nextChatMessage = index + 1 < loadedMessages.length
