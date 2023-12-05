@@ -3,9 +3,8 @@
 <p>This is a simple chat application I created to learn about the functionality of chat apps. I utilized <strong>Flutter</strong> for the interface design and used <strong>Dart</strong> as the programming language. For authentication and data storage, I used <strong>Firebase</strong> database.</p>
  
 <h2>Overview</h2>
-<p>Here is the full video that shows the working of the app.</p>
-[Watch the Video](https://github.com/Bilawal-Mehfooz-Malik/chat_app/blob/main/Untitled_Project_V1.mp4)
-<p>Here is the link to the file for installation:</p>
+<p>You can download the app from this link: https://github.com/Bilawal-Mehfooz-Malik/chat_app/blob/main/app-release.apk</p>
+<p>Here is a video demonstrating the app's functionality: https://github.com/Bilawal-Mehfooz-Malik/chat_app/blob/main/Untitled_Project_V1.mp4</p>
 
 <h3>Login and SignUp Screen:</h3>
 <img src="https://github.com/Bilawal-Mehfooz-Malik/chat_app/assets/151528480/9e11eb20-d44c-4fbd-ad30-01624e765dfb" alt="login pic" width="200" >
@@ -39,6 +38,11 @@ To accomplish this interface:
 - Messages are presented in reverse order for smoother interaction.
 </p>
 
+### Conclusion
 
+<p>Creating this Chat App has been an amazing journey for me. Through utilizing Flutter and Dart, and integrating Firebase for authentication and data storage, I've not only explored the functionalities of chat applications but also honed my skills in mobile app development.
 
-To use that app you can check in the project and install the app-release.apk to use it.
+From crafting the login and signup screens with user-friendly authentication to implementing the Chat Screen for seamless conversations, each aspect was a learning opportunity. The thoughtful design choices, intuitive message displays, and unique message representations all contribute to a modern and engaging user experience.
+
+I hope this app serves as both a demonstration of my skills and a tool for users to connect effortlessly. I'm excited to continue learning and enhancing this project, taking it to even greater heights!</p>
+
